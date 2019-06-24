@@ -1,0 +1,38 @@
+# Извещение о прямом платеже
+
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.keys import By
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+driver = webdriver.Chrome (r"C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
+driver.maximize_windows()
+driver.set_page_timeout(10)
+driver.get("https://test.factoring.ru/")
+
+driver.implicity_wait (10)
+
+assert "Welcome!" in driver.title
+
+driver.find_element_by_name ("userName").send_keys ("ewq123")
+driver.find_element_by_name ("password").send_keys ("qwe123")
+driver.find_element_by_class_name ("ef-login__button ef-button ef-button--flat ef-button--primary").click()
+
+driver.find_element_by_class_name ("ef-shell-nav-group__header ng-tns-c18-28 ng-star-inserted").click() #Переход в раздел Документы
+driver.find_element_by_class_name ("ef-button ng-tns-c36-63 ef-button--flat ef-button--primary ng-star-inserted").click() #Нажатие на кнопку добавить
+driver.find_element (By.XPATH, "//*[@id="cdk-overlay-6"]/ef-select-dialog/ef-scroll-box/div/ef-panel[2]/div[2]/ef-list-item[1]/a/div[1]").click() #Выбор "Извещение о поставке"
+driver.find_element (By.XPATH, "//*[@id="cdk-overlay-7"]/ef-document-editor/ef-page/div/page-content/ef-scroll-box/div/ef-invoice-notice-editor/form/fieldset/div[2]/div[2]/ef-organization-select/ef-entity-picker/ef-actions/ef-actions-item/button").click() #Нажатие на иконку карандаша
+driver.find_element_by_class_name ("form-control ng-pristine ng-valid ng-touched").send_keys('Плотава') #Поиск по названию компании
+driver.find_element (By.XPATH, "//*[@id="cdk-overlay-10"]/ef-entity-picker-dialog/div/ef-list/div/cdk-virtual-scroll-viewport/div[1]/ef-list-item/a/div[1]").click() #Выбор компании
+driver.find_element_by_name ("documentNumber").send_keys ('123456') #Ввод Номера документа
+driver.find_element (By.XPATH, "//*[@id="documentDateInput"]/ef-actions/ef-actions-item/button/ef-icon/svg").click() #Нажатие на иконку карандаша в поле Дата документа
+driver.find_element_by_class_name ("form-control ef-date-picker-dialog__input ng-pristine ng-valid ng-touched").click() #Нажатие в поле поиска
+driver.find_element (By.XPATH,"//*[@id="cdk-overlay-21"]/ef-date-picker-dialog/ef-calendar/div[2]/div[5]/button[3]").send_keys('19.06.2019') #Ввод даты
+driver.find_element_by_class_name ("cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing").sendKeys(Keys.ENTER) #Нажатие клавиши ENTER
+driver.find_element_by_id ("amountInput").send_keys('500000') #Ввод суммы платежа
+driver.find_element_by_class_name ("form-control ng-untouched ng-pristine ng-valid").click() #Добвление комментария
+driver.find_element (By.XPATH,"//*[@id="cdk-overlay-70"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[2]/button/ef-icon/svg").click() #Нажатие на кнопку Проверить возможность отправки
+driver.find_element (By.XPATH,"//*[@id="cdk-overlay-70"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[1]/button/ef-icon/svg").click() #Нажатие на кнопку Добавить и закрыть
+driver.find_element (By.XPATH,"/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/div/div/ag-grid-angular/div/div[2]/div[1]/div[3]/div[4]/div[1]/span/span[2]/span") #Нажатие на стрелку вправо
+/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/div/div/ag-grid-angular/div/div[2]/div[1]/div[3]/div[1]/div[1] ? #Проверка что запись создалась

@@ -1,0 +1,21 @@
+def  tets_yandex_search() :
+    driver = WebDriver(executable_path = 'C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe' )
+    driver.get('https://ya.ru')
+    search_input = driver.find_element_by_xpath ('//*[@id="text"]') #Находим элемент с локатором
+    search_button = driver.find_element_by_xpath('//div[@class="search2__button"]//button[@type="submit"]') #Находим элемент с локатором (кнопка Найти)
+    search_input.send_keys('market.yandex.ru')  # Ввод текста в поисковую строку
+    search_button.click() #Жмем на кнопку поиска
+
+    def  check_results_count (driver) :
+        inner_search_results = driver.find_element_by_xpath('//li[@class="serp-item"]')
+        return  len(search_results) < 11 #Количество ответов на странице должно быть меньше 11
+
+    WebDriverWait(driver, 5, 0.5).until(check_results_count, 'Количество результатов поиска меньше 10'()
+
+    search_results = driver.find_elements_by_xpath('//li[@class="serp-item"]')
+    link = search_results[0].find_element_by_xpath('.//h2/a')
+    link.click()
+
+    driver.switch_to.window(driver.window_handles[1])
+
+    assert .driver.title == 'Яндекс.Мапкет - выбор и покупка товаров из проверенных источников'

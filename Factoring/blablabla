@@ -1,3 +1,6 @@
+from selenium.webdriver.chrome.webdriver import  WebDriver
+from selenium.webdriver.chrome.wait import  WebDriverWait
+
 def  tets_yandex_search() :
     driver = WebDriver(executable_path = 'C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe' )
     driver.get('https://ya.ru')

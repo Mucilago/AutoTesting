@@ -3,45 +3,23 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-def  auntification() :
-    driver = webdriver.Chrome (executable_path = 'C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe')
+def authentication():
+    driver = webdriver.Chrome(executable_path="C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
     driver.get("https://test.factoring.ru/")
     driver.maximize_windows()
-    search_input_login= driver.find_element_by_xpath ('//*[@id="userNameInput"]')
-    search_input_password = driver.find_element_by_xpath ('//*[@id="passwordInput"]')
-    search_button = driver.find_element_by_xpath ('//div[@class="fullsize form-group"]//button[@type="submit"]')
-    search_input_login.send_keys ("ewq123")
-    search_input_password.send_keys ("qwe123")
-    search_button.click()  #Жмем на кнопку ВОЙТИ
+    search_login = driver.find_element_by_css_selector('input#userNameInput')
+    search_password = driver.find_element_by_css_selector('input#passwordInput')
+    search_button = driver.find_element_by_xpath('//div[@class="fullsize form-group"]//button[@type="submit"]')
+    search_login.send_keys("ewq123")
+    search_password.send_keys("qwe123")
+    search_button.click()  #Жмем на кнопку Войти
 
-    def create_delivery_notice():
-        driver.find_element_by_xpath("/html/body/ef-application/ui-view/ef-shell/div/ef-shell-nav/div/nav[2]/ef-shell-nav-group[3]/a/span").click() #Переход в раздел Документы
-        driver.find_element_by_xpath("/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/ef-toolbar/div[1]/ef-actions/button").click() #Нажать на кнопку Добавить
-        driver.find_element_by_class_name ("ef-button ef-button--flat").click() #Нажать на кнопку Закрыть
+    def add_document():
+        section_documents = driver.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__title"]')
+        section_documents.click() #Переход в раздел Документы
+        section_drafts = driver.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__item-title"]')
+        section_drafts.click() # Переход в раздел Черновики
 
-driver.find_element_by_xpath ("/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/ef-toolbar/div[1]/ef-actions/button").click() #Нажать на кнопку Добавить
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-14"]/ef-select-dialog/ef-scroll-box/div/ef-panel[2]/div[2]/ef-list-item[4]/a/div[1]").click() #Выбор извещения о поставке
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-15"]/ef-document-editor/ef-page/div/page-content/ef-scroll-box/div/ef-invoice-notice-editor/form/fieldset/div[2]/div[2]/ef-organization-select/ef-entity-picker/ef-actions/ef-actions-item/button/ef-icon/svg/path").click() #Нажатие на иконку карандаша в поле Покупатель
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-17"]/ef-entity-picker-dialog/div/ef-list/div/cdk-virtual-scroll-viewport/div[1]/ef-list-item[4]/a/div[1]").click() #Выбор покупателя
-driver.find_element_by_id ("numberInput").send_keys ('12345') #Ввод номера
-driver.find_element_by_xpath ("//*[@id="shipmentDateInput"]/ef-actions/ef-actions-item/button/ef-icon/svg").click() #Нажатие на иконку карандаша в поле "Дата отгрузки"
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-27"]/ef-date-picker-dialog/div/input").click() #Нажатие на поле поиска
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-21"]/ef-date-picker-dialog/ef-calendar/div[2]/div[5]/button[3]").send_keys('19.06.2019') #Ввод даты  !!!!    INPUT
-driver.find_element_by_class_name  ("ef-document-editor__content ef-scroll-box--indented ef-scroll-box--center-layout").sendKeys(Keys.ENTER) #Нажатие клавиши ENTER
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-38"]/ef-date-picker-dialog/ef-buttons/button[2]").click() #Нажатие на кноку Закрыть
-driver.find_element_by_xpath ("//*[@id="amountInput"]").send_keys (100000) #Ввод суммы
-driver.find_element_by_xpath ("///*[@id="aspectCurrencySelect"]/ef-actions/ef-actions-item/button/ef-icon/svg/path").click() #Нажатие на иконку карандаша в поле "В валюте"
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-21"]/ef-entity-picker-dialog/div/ef-list/div/cdk-virtual-scroll-viewport/div[1]/ef-list-item/a/div[1]").click() #Выбор валюты
-driver.find_element (By.id,("invoiceNumberInput").send_keys ('123456798фывasd')) #Ввод номера счета-фактуры
-driver.find_element_by_id ("billNumberInput").send_keys ('70401810229874563250') #Ввод номера счета
-driver.find_element_by_xpath ("//*[@id="contractSelect"]/ef-actions/ef-actions-item[2]/button/ef-icon").click() #Нажатие на иконку карандаша а поле Договор
-driver.find_element_by_xpath ("/*[@id="cdk-overlay-65"]/ef-entity-picker-dialog/div/div[1]/div/input").click() #Нажатие на строку поиска
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-25"]/ef-entity-picker-dialog/div/div[1]/div/input").send_keys(222) #Ввод в поле поиска названия договора
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-25"]/ef-entity-picker-dialog/div/ef-list/div/cdk-virtual-scroll-viewport/div[1]/ef-list-item/a").click() #Выбор договра
-driver.find_element_by_xpath ("//*[@id="contractDelaySelect"]/ef-actions/ef-actions-item[2]/button/ef-icon").click()
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-26"]/ef-entity-picker-dialog/div/ef-list/div/cdk-virtual-scroll-viewport/div[1]/ef-list-item/a").click()
-driver.find_element_by_id ("commentInput").send_keys ('123456798фывasd!"№;%:?*()/*-+') # Ввод коментария
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-12"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[2]/button").click() #добавить проверку
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-12"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[1]/button").click()
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-27"]/div/ef-menu-item[1]").click() #Проверка создания новой записи
-
+        def create_document():
+            search_button_add = driver.find_element_by_xpath('//div[ @class ="ef-toolbar__content"]//button[@ color="primary"]')
+            search_button_add.click()  # Клик на кнопку Добавить

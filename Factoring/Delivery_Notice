@@ -8,23 +8,21 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support import WebDriverWait
 import time
 
-def authentication():
-    driver = webdriver.Chrome(executable_path="C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
+def authentication(auth):
+    driver = webdriver.Chrome(executable_path = "C:\\Users\Владимир\PycharmProjects\Selenium\drivers\chromedriver.exe")
     driver.get("https://test.factoring.ru/")
-    driver.implicity_wait(10)
-    wait = WebDriverWait(driver, 10)
     driver.maximize_windows()
-    search_login = driver.find_element_by_css_selector('input#userNameInput')
-    search_password = driver.find_element_by_css_selector('input#passwordInput')
-    search_button = driver.find_element_by_xpath('//div[@class="fullsize form-group"]//button[@type="submit"]')
+    search_login = auth.find_element_by_id('userNameInput')
+    search_password = auth.find_elements_by_id('passwordInput')
+    search_button = auth.find_element_by_class_name('button')
     search_login.send_keys("ewq123")
     search_password.send_keys("qwe123")
     search_button.click()  # Жмем на кнопку Войти
 
-def add_document():
-        section_documents = driver.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__title"]') # or (//span[text()='Документы'])[2]
+def add_document(doc):
+        section_documents = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__title"]') # or (//span[text()='Документы'])[2]
         section_documents.click() # Переход в раздел Документы
-        section_drafts = driver.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__item-title"]') # or (//a[@href='#/documents/new']//span)[2]
+        section_drafts = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__item-title"]') # or (//a[@href='#/documents/new']//span)[2]
         section_drafts.click() # Переход в раздел Черновики
 
     def create_document():

@@ -22,16 +22,16 @@ class factoring(unittest.TestCase):     #Вызывается перед каж�
         time.sleep(5)
 
     def add_document(doc):
-        section_documents = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__title"]') # or (//span[text()='Документы'])[2]
+        section_documents = doc.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__title']") # or (//span[text()='Документы'])[2]
         section_documents.click() # Переход в раздел Документы
         time.sleep(5)
-        section_drafts = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__item-title"]') # or (//a[@href='#/documents/new']//span)[2]
+        section_drafts = doc.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__item-title']") # or (//a[@href='#/documents/new']//span)[2]
         section_drafts.click() # Переход в раздел Черновики
 
     def create_document():
-        search_button_add = driver.find_element_by_xpath('.//div[@class ="ef-toolbar__content"]//button[@ color="primary"]') #  или //button[text()=' Добавить ']
+        search_button_add = driver.find_element_by_xpath(".//div[@class ='ef-toolbar__content']//button[@ color='primary']") #  или //button[text()=' Добавить"]
         search_button_add.click()  # Клик на кнопку Добавить
-        delivery_notice = driver.find_element_by_xpath('//*[@id="cdk-overlay-6"]/ef-select-dialog/ef-scroll-box/div/ef-panel[2]/div[2]/ef-list-item[1]/a/div[1]')  # or (//div[@class='ef-list-item__title'])[2]
+        delivery_notice = driver.find_element_by_xpath("//*[@id='cdk-overlay-6']/ef-select-dialog/ef-scroll-box/div/ef-panel[2]/div[2]/ef-list-item[1]/a/div[1]")  # or (//div[@class='ef-list-item__title'])[2]
         delivery_notice.click()  # Выбрали Извещение о поставке
 
     def create_delivery_notice():

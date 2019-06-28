@@ -1,3 +1,57 @@
+# Поиск в Google / Пример 1
+# import pytest
+# from selenium import webdriver
+# from selenium.webdriver.support.wait import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+#
+# @pytest.fixture
+# def driver(request):
+#     wd = webdriver.Chrome()
+#     request.addfinalizer(wd.quit)
+#     return wd
+#
+# def test_example (driver):
+#     driver.get('http://google.com/')
+#     driver.find_element_by_name('q').send_keys('webdriber')
+#     driver.find_element_by_name('btnG').click()
+#     WebDriverWait(driver, 10).untill(EC.title_is('webdriver - Поиск в Google'))
+
+
+# from selenium.webdriver import Chrome # Поиск в Google / Пример 2
+# from selenium.webdriver.common.by import By
+#
+#
+# def test_google_search():
+#     #  Открыть браузер
+#     driver = Chrome()
+#     #  Переход на страницу
+#     driver.get('https://google.com')
+#     search_input = driver.find_element_by_name('q')
+#     #  Ввод текста
+#     search_input.send_keys('Selenium')
+#     search_input.submit()
+#
+#     #  Проверка результатов поиска
+#     search_result = driver.find_elements(
+#         by=By.CSS_SELECTOR,
+#         value='#rso .srg div.g'
+#     )
+#     assert len(search_result) > 0
+#     for result in search_result:
+#         title_text = result.find_element_by_tag_name('h3').text
+#         assert 'Selenium' in title_text
+
+
+
+# @pytest.fixture #Выведение информации о алертах + настройки браузера
+# def driver(request):
+#     wd = webdriver.Chrome(capabilities = {'unexpectedAlertBehaviour': 'dismiss'})
+#     print (wd.capabilities)
+#     request.addfinalizer(wd.quit)
+#     return wd
+
+# Поиск в Yandex / Пример 2
+
 from selenium.webdriver.chrome.webdriver import  WebDriver
 from selenium.webdriver.chrome.wait import  WebDriverWait
 

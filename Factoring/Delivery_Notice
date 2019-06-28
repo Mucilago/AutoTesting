@@ -1,27 +1,30 @@
 # Извещение о поставке
 
-import pytest
 from selenium import webdriver
+import unittest
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support import WebDriverWait
 import time
 
-def authentication(auth):
-    driver = webdriver.Chrome(executable_path = "C:\\Users\Владимир\PycharmProjects\Selenium\drivers\chromedriver.exe")
-    driver.get("https://test.factoring.ru/")
-    driver.maximize_windows()
-    search_login = auth.find_element_by_id('userNameInput')
-    search_password = auth.find_elements_by_id('passwordInput')
-    search_button = auth.find_element_by_class_name('button')
-    search_login.send_keys("ewq123")
-    search_password.send_keys("qwe123")
-    search_button.click()  # Жмем на кнопку Войти
+class factoring(unittest.TestCase):     #Вызывается перед каждым кейсом
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path = "C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
+        self.driver.get("https://test.factoring.ru/")
 
-def add_document(doc):
+    def setUp(self):
+        driver = self.driver
+        search_login = driver.find_element_by_id('userNameInput')
+        search_login.send_keys("ewq123")
+        search_password = driver.find_elements_by_id('passwordInput')
+        search_password.send_keys("qwe123")
+        search_button = driver.find_element_by_class_name('button')
+        search_button.click()  # Жмем на кнопку Войти
+
+        time.sleep(5)
+
+    def add_document(doc):
         section_documents = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__title"]') # or (//span[text()='Документы'])[2]
         section_documents.click() # Переход в раздел Документы
+        time.sleep(5)
         section_drafts = doc.find_element_by_xpath('.//a[@href="#/documents/new"]//span[@class="ef-shell-nav-group__item-title"]') # or (//a[@href='#/documents/new']//span)[2]
         section_drafts.click() # Переход в раздел Черновики
 
@@ -32,17 +35,17 @@ def add_document(doc):
         delivery_notice.click()  # Выбрали Извещение о поставке
 
     def create_delivery_notice():
-        customer = driver.find_element_by_xpath ('(//label[text()='Покупатель']/following::input)[1]')
+        customer = driver.find_element_by_xpath ("(//label[text()='Покупатель']/following::input)[1]")
         customer.click() #Клик на поле Покупатель
-        enter_text = driver.find_element_by_xpath('//input[contains(@class,'form-control ng-pristine')]')
+        enter_text = driver.find_element_by_xpath("//input[contains(@class,'form-control ng-pristine')]")
         enter_text.send_keys('Юань')
         add_company = driver.find_elements_by_class_name
         add_company.click() #Выбор компании
         add_number_document = driver.find_elements_by_id('numberInput')
         add_number_document.send_keys('324621265618800') #Добавление номера
-        calendar = driver.find_element_by_xpath('//input[contains(@class,'ef-date-picker__input form-control')]')
+        calendar = driver.find_element_by_xpath("//input[contains(@class,'ef-date-picker__input form-control')]")
         calendar.click()
-        select_day = driver.find_element_by_xpath('//button[contains(@class,'ef-calendar__week-day ef-calendar__week-day--selected')]')
+        select_day = driver.find_element_by_xpath("//button[contains(@class,'ef-calendar__week-day ef-calendar__week-day--selected')]")
         select_day.click() #Выбор даты
         add_sum = driver.find_element_by_xpath('amount')
         add_sum.send_keys('15000000')
@@ -55,3 +58,6 @@ def add_document(doc):
         add_comment = driver.find_elements_by_id('commentInput')
         add_comment.send_keys('123`Ё!"№;%:?*()_+=-*\^&^$#/')
 
+
+    def tearDown(self): #Выход
+        self.driver.quit()

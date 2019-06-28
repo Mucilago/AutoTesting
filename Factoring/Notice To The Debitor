@@ -1,0 +1,39 @@
+# Извещение на дебитора
+
+from selenium import webdriver
+import unittest
+from selenium.webdriver.common.keys import Keys
+import time
+
+class factoring(unittest.TestCase):     #Вызывается перед каждым кейсом
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path = "C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
+        self.driver.get("https://test.factoring.ru/")
+
+    def setUp(self):
+        driver = self.driver
+        search_login = driver.find_element_by_id('userNameInput')
+        search_login.send_keys("ewq123")
+        search_password = driver.find_elements_by_id('passwordInput')
+        search_password.send_keys("qwe123")
+        search_button = driver.find_element_by_class_name('button')
+        search_button.click()  # Жмем на кнопку Войти
+
+        time.sleep(5)
+
+    def add_document(self):
+        section_documents = self.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__title']") # or (//span[text()='Документы'])[2]
+        section_documents.click() # Переход в раздел Документы
+        time.sleep(5)
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__item-title']") # or (//a[@href='#/documents/new']//span)[2]
+        section_drafts.click() # Переход в раздел Черновики
+
+    def create_document(self):
+        search_button_add = self.find_element_by_xpath(".//div[@class ='ef-toolbar__content']//button[@ color='primary']")  # или //button[text()=' Добавить"]
+        search_button_add.click()  # Клик на кнопку Добавить
+        delivery_notice = self.find_element_by_xpath("//div[text()='Извещение на дебитора']")
+        delivery_notice.click()  # Выбрали Извещение на дебитора
+
+    def create_notice_to_the_debitor(self):
+        product_add = self.find_element_by_xpath("(//input[contains(@class,'form-control ef-entity-picker__input')])[2]")
+        product_add.click()

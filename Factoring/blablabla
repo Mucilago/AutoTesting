@@ -76,3 +76,37 @@ def  tets_yandex_search() :
     driver.switch_to.window(driver.window_handles[1])
 
     assert .driver.title == 'Яндекс.Мапкет - выбор и покупка товаров из проверенных источников'
+    
+    
+    
+    
+    
+    
+   ОСНОВА:!!!
+
+import datetime
+import unittest
+from selenium import webdriver
+
+class EnvSetup(unittest.TestCase):
+
+    def setUp(self):
+        self.driver = webdriver.Chrome(executable_path=r'C:\\Users\Владимир\PycharmProjects\Selenium\drivers\chromedriver.exe')
+        print("Browser Started at :" + str(datetime.datetime.now()))
+        print("Chrome has been setUP....")
+        print("************************************")
+
+    def test_checkBrowser(self):
+        driver = self.driver
+        driver.get("https://test.factoring.ru/")
+        driver.save_screenshot('./Screenshots/1.png')
+        print('Test Completed: Closing the browser...')
+
+    def EnterSite(self):
+        driver = self.driver
+        search_login = driver.find_element_by_id('userNameInput')
+        search_login.send_keys("ewq123")
+        search_password = driver.find_elements_by_id('passwordInput')
+        search_password.send_keys("qwe123")
+        search_button = driver.find_element_by_class_name('button')
+        search_button.click()  # Жмем на кнопку Войти

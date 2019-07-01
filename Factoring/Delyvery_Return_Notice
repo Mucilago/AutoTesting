@@ -1,14 +1,25 @@
-from selenium import webdriver
+# Извещение о возвратной накладной
+
+import datetime
 import unittest
-from selenium.webdriver.common.keys import Keys
-import time
+from selenium import webdriver
+import random
 
-class factoring(unittest.TestCase):     #Вызывается перед каждым кейсом
-    def setUp(self):
-        self.driver = webdriver.Chrome(executable_path = "C:\\Users\mor_vk\PycharmProjects\FirstSeleniumTest\driver\chromedriver.exe")
-        self.driver.get("https://test.factoring.ru/")
+class EnvSetup(unittest.TestCase):
 
     def setUp(self):
+        self.driver = webdriver.Chrome(executable_path=r'C:\\Users\Владимир\PycharmProjects\Selenium\drivers\chromedriver.exe')
+        print("Browser Started at :" + str(datetime.datetime.now()))
+        print("Chrome has been setUP....")
+        print("************************************")
+
+    def test_checkBrowser(self):
+        driver = self.driver
+        driver.get("https://test.factoring.ru/")
+        driver.save_screenshot("./Screenshots/1.png")
+        print("Test Completed: Closing the browser...")
+
+    def EnterSite(self):
         driver = self.driver
         search_login = driver.find_element_by_id('userNameInput')
         search_login.send_keys("ewq123")
@@ -18,26 +29,59 @@ class factoring(unittest.TestCase):     #Вызывается перед каж�
         search_button.click()  # Жмем на кнопку Войти
 
         time.sleep(5)
-!!!
 
-driver.find_element_by_xpath ( "/html/body/ef-application/ui-view/ef-shell/div/ef-shell-nav/div/nav[2]/ef-shell-nav-group[3]/a/span").click() #Переход в раздел Документы
-driver.find_element_by_xpath ("/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/ef-toolbar/div[1]/ef-actions/button").click() #Нажать на кнопку Добавить
-driver.find_element_by_class_name ("ef-button ef-button--flat").click() #Нажать на кнопку Закрыть
+    def add_document(self):
+        section_documents = self.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__title']")
+        section_documents.click() # Переход в раздел Документы
+        # time.sleep(5)
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/new']//span[@class='ef-shell-nav-group__item-title']")
+        section_drafts.click() # Переход в раздел Черновики
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/signed']//span[1]")
+        section_drafts.click()  # Переход в раздел Подписанные
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/sent']//span[1]")
+        section_drafts.click()  # Переход в раздел Отправленные
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/internal']//span[1]")
+        section_drafts.click()  # Переход в раздел Внутренние
+        section_drafts = self.find_element_by_xpath(".//a[@href='#/documents/deleted']//span[1]")
+        section_drafts.click()  # Переход в раздел Удаленные
 
-driver.find_element_by_xpath ("/html/body/ef-application/ui-view/ef-shell/div/main/ef-document-list/div/ef-toolbar/div[1]/ef-actions/button").click() #Нажать на кнопку Добавить
-driver.find_element_by_class_name ("ef-button ef-button--flat").click() #Нажать на Извещение о возвратной накладной
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-37"]/ef-document-editor/ef-page/div/page-content/ef-scroll-box/div/ef-returned-invoice-editor/form/fieldset/div[2]/div[2]/ef-organization-select/ef-entity-picker/ef-actions/ef-actions-item/button/ef-icon/svg").click() #Нажать на иконку карандаша в поле  Покупатель
-driver.find_element_by_class_name ("form-control ng-pristine ng-valid ng-touche").send_keys("Юань") #Ввод в текста в строку поиска
-driver.find_element_by_class_name ("ef-list-item__content").click() #Нажатие на найденную запись
-driver.find_element_by_name ("documentNumber").send_keys ("8525/ДОД-2") #Добавление номера документа
-driver.find_element_by_xpath ("//*[@id="documentDateInput"]/ef-actions/ef-actions-item/button/ef-icon").click() #Нажатие на иконку карандаша в поле Дата документа
-driver.find_element_by_class_name ("ef-calendar__week-day ef-calendar__week-day--selected ng-star-inserted").click() #Выбор даты в календаре
-driver.find_element_by_id ("amountInput").send_keys('500000') #Заполнение поля Сумма документа
-driver.find_element_by_xpath ("//*[@id="aspectCurrencySelect"]/ef-actions/ef-actions-item[2]/button/ef-icon").click() #Нажатие на иконку карандаша в поле в валюте
-driver.find_element_by_class_name ("ef-list-item__content").click()  #Выбор валюты
-driver.find_element_by_xpath ("commentInput").send_keys('123456798фывasd!"№;%:?*()/*-+') # Ввод коментария
-#driver.find_element_by_xpath ("//*[@id="cdk-overlay-37"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[2]").click() #Нажатие на кнопку Проверить возможность отправки
-#Добавить проверку что текст = "Проверка прошла успешно. Документ может быть отправлен."
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-75"]/ef-document-editor/ef-page/div/page-content/ef-toolbar/div[1]/ef-actions[2]/ef-actions-item[1]/button").click() #Нажатие на иконку Дискеты
-driver.find_element_by_xpath ("//*[@id="cdk-overlay-89"]/div/ef-menu-item[1]/a/div[1]").click() #Нажатие на кнопку Добавить и закрыть
-#Проверка что запись создалась
+    def create_document(self):
+        search_button_add = self.find_element_by_xpath(".//div[@class ='ef-toolbar__content']//button[@ color='primary']")
+        search_button_add.click()  # Клик на кнопку Добавить
+        delivery_notice = self.find_element_by_xpath("(.//div[text()='Извещение о возвратной накладной'])[1]")
+        delivery_notice.click()  # Выбрали Извещение о возвратной накладной
+
+    def create_return_notice(self):
+        customer = self.find_element_by_xpath("(.//label[text()='Покупатель']/following::input)[1]")
+        customer.click()  # Клик на поле Покупатель
+        enter_text = self.find_element_by_xpath(".//div[@class='input-group']//input[1]")
+        enter_text.send_keys('Юань')  # Ввод ключевого слова
+        add_company = self.find_elements_by_class_name("ef-list-item__title")
+        add_company.click()  # Выбор компании
+        add_number_document = self.find_elements_by_id("documentNumberInput")
+        add_number_document.send_keys("654885225618800") # Добавление номера
+        calendar = self.find_element_by_xpath(".//input[contains(@class ,'ef-date-picker__input form-control')]")
+        calendar.click() # Клик на поле Дата документа
+        select_day = self.find_element_by_xpath(".//button[contains(@class,'ef-calendar__week-day ef-calendar__week-day--selected')]")
+        select_day.click()  # Выбор текущей даты
+        add_sum = self.find_elements_by_id("amountInput")
+        add_sum.send_keys(1000000)  # Ввод суммы
+        choice_currency = self.find_element_by_xpath(".//label[text() ='В валюте']/following::input")
+        choice_currency.click()  # Клик на поле в Валюте
+        currency = self.find_element_by_class_name("ef-list-item__title")
+        currency.click()  # Выбираем валюту
+        add_comment = self.find_elements_by_id("commentInput")
+        add_comment.send_keys("123as+d/ф*ы-в`Ё!")  # Добавляем комментарий
+    def check(self):
+        check_in = self.find_elements_by_css("[eftooltip = 'Проверить возможность отправки']")
+        check_in.click()
+        check_add = self.find_elements_by_css("page-content [aria-haspopup]")
+        check_add.click()
+        add_exit = self.find_element_by_xpath(".//div[text() = 'Добавить и закрыть']")
+        add_exit.ckick()
+
+    #def creation_check(self):
+
+
+    def tearDown(self): #Выход
+        self.driver.quit()

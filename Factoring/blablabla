@@ -110,3 +110,48 @@ class EnvSetup(unittest.TestCase):
         search_password.send_keys("qwe123")
         search_button = driver.find_element_by_class_name('button')
         search_button.click()  # Жмем на кнопку Войти
+
+from selenium import webdriver
+import time
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+#login
+#forgot password
+
+app_url = 'http://schooldata-test.com/'
+
+class TestSmokeSuite:
+
+  def setup_method(self, method):
+      self.driver = webdriver.Chrome()
+      self.driver.get("http://schooldata-test.com/")
+      self.driver.maximize_window()
+  def teardown_method(self, method):
+      self.driver.quit()
+
+  def test_my_first(self):
+     self.driver.find_element_by_name("query").send_keys("se")
+     time.sleep(8)
+     self.driver.find_element_by_xpath("//*[@id='root']/div/div[2]/div/h1").click()
+     time.sleep(3)
+     self.driver.find_element_by_xpath("//*[@id='root']/div/div[2]/div/form/button").click()
+     try:
+         element = WebDriverWait(self.driver, 20).until(
+             EC.presence_of_element_located((By.ID, "adress"))
+         )
+     finally:
+         self.driver.find_element_by_id("adress").send_keys("hello")
+
+  def test_second(self):
+      self.driver.find_element_by_name("query").send_keys("se")
+      time.sleep(8)
+      self.driver.find_element_by_xpath("//*[@id='root']/div/div[2]/div/h1").click()
+      time.sleep(3)
+
+--!!--
+from selenium import webdriver
+#driver = webdriver.Firefox()
+driver = webdriver.Chrome()
+driver.get("http://www.python.org")

@@ -154,4 +154,5 @@ class TestSmokeSuite:
 from selenium import webdriver
 #driver = webdriver.Firefox()
 driver = webdriver.Chrome()
-driver.get("http://www.python.org")
+driver.get("https://test.factoring.ru/")
+driver.maximize_window()
